@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+# additional
+ADIP_Final/.vs/
+ADIP_Final/Debug/
+ADIP_Final/ADIP_Final/Debug/
+
