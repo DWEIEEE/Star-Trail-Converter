@@ -32,7 +32,7 @@
 *.app
 
 # additional
-ADIP_Final/.vs/
-ADIP_Final/Debug/
-ADIP_Final/ADIP_Final/Debug/
+Qt_StarTrail/.vs/
+Qt_StarTrail/Debug/
+Qt_StarTrail/Qt_StarTrail/Debug/
 
