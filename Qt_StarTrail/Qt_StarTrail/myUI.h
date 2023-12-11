@@ -18,6 +18,8 @@ private slots:
     void output_browse();
     void pushLeft();
     void pushRight();
+    void changeFolder();
+    void changeFile();
     void searchFolder(const QString& string);
     void loadImg();
 
@@ -27,4 +29,5 @@ private:
     int now = 0;
     int itemCount = 0;
     QString input_folderPath;
+    bool selected = true;
 };
