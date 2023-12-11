@@ -11,7 +11,7 @@ public:
 
 signals:
     void getInputPath(const QString& string);
-    void getFiles(const QStringList& string);
+    void getFiles();
 
 private slots:
     void input_browse();
@@ -19,7 +19,7 @@ private slots:
     void pushLeft();
     void pushRight();
     void searchFolder(const QString& string);
-    void loadImg(const QStringList& string);
+    void loadImg();
 
 private:
     Ui::MyUIClass ui;

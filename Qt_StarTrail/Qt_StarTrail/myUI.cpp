@@ -69,7 +69,7 @@ void MyUI::pushRight()
     //qDebug() << "scaledPixmap :" << scaledPixmap.height() << scaledPixmap.width();
     ui.label_16->setPixmap(scaledPixmap);
 }
-void MyUI::loadImg(const QStringList& files)
+void MyUI::loadImg()
 {
     itemCount = files.size();
     qDebug() << "Number of items in QStringList:" << itemCount;
@@ -106,7 +106,7 @@ void MyUI::searchFolder(const QString& path)
     foreach(const QString & file, files) {
         qDebug() << file;
     }
-    emit getFiles(files);
+    emit getFiles();
 }
 void MyUI::input_browse()
 {
