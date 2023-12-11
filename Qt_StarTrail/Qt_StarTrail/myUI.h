@@ -20,6 +20,8 @@ private slots:
     void pushRight();
     void changeFolder();
     void changeFile();
+    void generateMode();
+    void restoreMode();
     void searchFolder(const QString& string);
     void loadImg();
 

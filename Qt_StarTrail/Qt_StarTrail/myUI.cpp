@@ -32,6 +32,8 @@ MyUI::MyUI(QWidget *parent) : QWidget(parent)
     connect(ui.pushButton_12, SIGNAL(clicked()), SLOT(pushRight()));
     connect(ui.radioButton_4, SIGNAL(clicked()), SLOT(changeFolder()));
     connect(ui.radioButton_3, SIGNAL(clicked()), SLOT(changeFile()));
+    connect(ui.radioButton_2, SIGNAL(clicked()), SLOT(restoreMode()));
+    connect(ui.radioButton, SIGNAL(clicked()), SLOT(generateMode()));
     connect(this, &MyUI::getInputPath, this, &MyUI::searchFolder);
     connect(this, &MyUI::getFiles, this, &MyUI::loadImg);
 }
@@ -186,4 +188,57 @@ void MyUI::changeFile()
     ui.label_20->setText("0/0");
     ui.pushButton_11->setEnabled(false);
     ui.pushButton_12->setEnabled(false);
+}
+void MyUI::generateMode() {
+    QPixmap blank("ui_img/blank.jpg");
+    ui.label_9->setPixmap(blank);
+    ui.label_10->setPixmap(blank);
+    ui.label_11->setPixmap(blank);
+    ui.label_12->setPixmap(blank);
+    ui.label_16->setPixmap(blank);
+    ui.label_5->setText("Circular");
+    files.clear();
+    now = 0;
+    itemCount = 0;
+    ui.label_6->show();
+    ui.label_7->show();
+    ui.label_10->show();
+    ui.label_12->show();
+    ui.label_14->show();
+    ui.label_15->show();
+    ui.label_16->show();
+    ui.label_17->show();
+    ui.pushButton_4->show();
+    ui.pushButton_5->show();
+    ui.pushButton_7->show();
+    ui.pushButton_8->show();
+    ui.pushButton_9->show();
+    ui.pushButton_10->show();
+}
+void MyUI::restoreMode() {
+    QPixmap blank("ui_img/blank.jpg");
+    ui.label_9->setPixmap(blank);
+    ui.label_10->setPixmap(blank);
+    ui.label_11->setPixmap(blank);
+    ui.label_12->setPixmap(blank);
+    ui.label_16->setPixmap(blank);
+    ui.label_5->setText("Starry Sky");
+    files.clear();
+    now = 0;
+    itemCount = 0;
+    ui.label_6->hide();
+    ui.label_7->hide();
+    ui.label_10->hide();
+    ui.label_12->hide();
+    ui.label_14->hide();
+    ui.label_15->hide();
+    ui.label_16->hide();
+    ui.label_17->hide();
+    ui.pushButton_4->hide();
+    ui.pushButton_5->hide();
+    ui.pushButton_7->hide();
+    ui.pushButton_8->hide();
+    ui.pushButton_9->hide();
+    ui.pushButton_10->hide();
+
 }
