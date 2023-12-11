@@ -7,7 +7,7 @@
 *****************************************************************************/
 
 static const unsigned char qt_resource_data[] = {
-  // C:/Users/DWEI/Desktop/course/ADIP/Qt_StarTrail/Qt_StarTrail/ui_img/blank.jpg
+  // C:/Users/DWEI/Desktop/course/ADIP/ADIP_Final/Qt_StarTrail/Qt_StarTrail/ui_img/blank.jpg
   0x0,0x0,0x1,0x98,
   0x0,
   0x0,0x60,0x38,0x78,0xda,0xed,0xcf,0xcb,0x37,0xd5,0x51,0x14,0xc0,0xf1,0xf3,0xbb,
