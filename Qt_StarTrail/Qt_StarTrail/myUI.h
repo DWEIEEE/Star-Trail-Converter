@@ -11,15 +11,17 @@ public:
 
 signals:
     void getInputPath(const QString& string);
-    void getFiles(const QStringList& string);
+    void getFiles();
 
 private slots:
     void input_browse();
     void output_browse();
     void pushLeft();
     void pushRight();
+    void changeFolder();
+    void changeFile();
     void searchFolder(const QString& string);
-    void loadImg(const QStringList& string);
+    void loadImg();
 
 private:
     Ui::MyUIClass ui;
@@ -27,4 +29,5 @@ private:
     int now = 0;
     int itemCount = 0;
     QString input_folderPath;
+    bool selected = true;
 };

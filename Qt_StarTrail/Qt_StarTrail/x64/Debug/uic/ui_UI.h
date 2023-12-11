@@ -59,6 +59,9 @@ public:
     QLabel *label_6;
     QPushButton *pushButton_7;
     QLabel *label_10;
+    QLabel *label_22;
+    QRadioButton *radioButton_3;
+    QRadioButton *radioButton_4;
 
     void setupUi(QWidget *MyUIClass)
     {
@@ -86,7 +89,7 @@ public:
         label_9->setAlignment(Qt::AlignCenter);
         radioButton = new QRadioButton(MyUIClass);
         radioButton->setObjectName("radioButton");
-        radioButton->setGeometry(QRect(860, 280, 100, 30));
+        radioButton->setGeometry(QRect(860, 300, 100, 30));
         QFont font2;
         font2.setPointSize(11);
         radioButton->setFont(font2);
@@ -105,7 +108,7 @@ public:
         pushButton_6->setFont(font3);
         pushButton = new QPushButton(MyUIClass);
         pushButton->setObjectName("pushButton");
-        pushButton->setGeometry(QRect(1210, 100, 30, 30));
+        pushButton->setGeometry(QRect(1210, 120, 30, 30));
         pushButton_3 = new QPushButton(MyUIClass);
         pushButton_3->setObjectName("pushButton_3");
         pushButton_3->setGeometry(QRect(664, 385, 56, 20));
@@ -129,7 +132,7 @@ public:
         label_19->setFont(font4);
         pushButton_12 = new QPushButton(MyUIClass);
         pushButton_12->setObjectName("pushButton_12");
-        pushButton_12->setGeometry(QRect(1210, 220, 30, 30));
+        pushButton_12->setGeometry(QRect(1210, 240, 30, 30));
         QFont font5;
         font5.setPointSize(22);
         pushButton_12->setFont(font5);
@@ -143,7 +146,7 @@ public:
         label_14->setFont(font6);
         label_8 = new QLabel(MyUIClass);
         label_8->setObjectName("label_8");
-        label_8->setGeometry(QRect(760, 280, 100, 30));
+        label_8->setGeometry(QRect(760, 300, 100, 30));
         QFont font7;
         font7.setFamilies({QString::fromUtf8("Arial")});
         font7.setPointSize(11);
@@ -155,19 +158,19 @@ public:
         label_17->setFont(font7);
         pushButton_11 = new QPushButton(MyUIClass);
         pushButton_11->setObjectName("pushButton_11");
-        pushButton_11->setGeometry(QRect(1120, 220, 30, 30));
+        pushButton_11->setGeometry(QRect(1120, 240, 30, 30));
         pushButton_11->setFont(font5);
         radioButton_2 = new QRadioButton(MyUIClass);
         radioButton_2->setObjectName("radioButton_2");
-        radioButton_2->setGeometry(QRect(990, 280, 100, 30));
+        radioButton_2->setGeometry(QRect(990, 300, 100, 30));
         radioButton_2->setFont(font7);
         label_21 = new QLabel(MyUIClass);
         label_21->setObjectName("label_21");
-        label_21->setGeometry(QRect(860, 220, 250, 30));
+        label_21->setGeometry(QRect(860, 240, 250, 30));
         label_21->setFont(font7);
         label_20 = new QLabel(MyUIClass);
         label_20->setObjectName("label_20");
-        label_20->setGeometry(QRect(1160, 220, 40, 30));
+        label_20->setGeometry(QRect(1160, 240, 40, 30));
         label_20->setFont(font7);
         label_20->setAlignment(Qt::AlignCenter);
         label_4 = new QLabel(MyUIClass);
@@ -176,7 +179,7 @@ public:
         label_4->setFont(font1);
         lineEdit = new QLineEdit(MyUIClass);
         lineEdit->setObjectName("lineEdit");
-        lineEdit->setGeometry(QRect(860, 100, 330, 30));
+        lineEdit->setGeometry(QRect(860, 120, 330, 30));
         QFont font8;
         font8.setFamilies({QString::fromUtf8("Arial")});
         font8.setPointSize(8);
@@ -200,7 +203,7 @@ public:
         pushButton_10->setGeometry(QRect(1210, 360, 30, 30));
         label_2 = new QLabel(MyUIClass);
         label_2->setObjectName("label_2");
-        label_2->setGeometry(QRect(760, 220, 81, 30));
+        label_2->setGeometry(QRect(760, 240, 81, 30));
         label_2->setFont(font7);
         label_15 = new QLabel(MyUIClass);
         label_15->setObjectName("label_15");
@@ -214,7 +217,7 @@ public:
         label_12->setAlignment(Qt::AlignCenter);
         label = new QLabel(MyUIClass);
         label->setObjectName("label");
-        label->setGeometry(QRect(760, 100, 100, 30));
+        label->setGeometry(QRect(760, 120, 100, 30));
         label->setFont(font7);
         pushButton_8 = new QPushButton(MyUIClass);
         pushButton_8->setObjectName("pushButton_8");
@@ -222,7 +225,7 @@ public:
         pushButton_8->setFont(font3);
         label_3 = new QLabel(MyUIClass);
         label_3->setObjectName("label_3");
-        label_3->setGeometry(QRect(760, 160, 100, 30));
+        label_3->setGeometry(QRect(760, 180, 100, 30));
         label_3->setFont(font7);
         label_13 = new QLabel(MyUIClass);
         label_13->setObjectName("label_13");
@@ -242,11 +245,11 @@ public:
         label_7->setFont(font1);
         lineEdit_2 = new QLineEdit(MyUIClass);
         lineEdit_2->setObjectName("lineEdit_2");
-        lineEdit_2->setGeometry(QRect(860, 160, 330, 30));
+        lineEdit_2->setGeometry(QRect(860, 180, 330, 30));
         lineEdit_2->setFont(font8);
         pushButton_2 = new QPushButton(MyUIClass);
         pushButton_2->setObjectName("pushButton_2");
-        pushButton_2->setGeometry(QRect(1210, 160, 30, 30));
+        pushButton_2->setGeometry(QRect(1210, 180, 30, 30));
         label_6 = new QLabel(MyUIClass);
         label_6->setObjectName("label_6");
         label_6->setGeometry(QRect(50, 425, 100, 30));
@@ -261,6 +264,18 @@ public:
         label_10->setPixmap(QPixmap(QString::fromUtf8(":/MyUI/ui_img/blank.jpg")));
         label_10->setScaledContents(false);
         label_10->setAlignment(Qt::AlignCenter);
+        label_22 = new QLabel(MyUIClass);
+        label_22->setObjectName("label_22");
+        label_22->setGeometry(QRect(760, 60, 100, 30));
+        label_22->setFont(font7);
+        radioButton_3 = new QRadioButton(MyUIClass);
+        radioButton_3->setObjectName("radioButton_3");
+        radioButton_3->setGeometry(QRect(860, 60, 100, 30));
+        radioButton_3->setFont(font2);
+        radioButton_4 = new QRadioButton(MyUIClass);
+        radioButton_4->setObjectName("radioButton_4");
+        radioButton_4->setGeometry(QRect(990, 60, 100, 30));
+        radioButton_4->setFont(font7);
 
         retranslateUi(MyUIClass);
 
@@ -294,7 +309,7 @@ public:
         label_2->setText(QCoreApplication::translate("MyUIClass", "FileName : ", nullptr));
         label_15->setText(QCoreApplication::translate("MyUIClass", "00:00:00", nullptr));
         label_12->setText(QString());
-        label->setText(QCoreApplication::translate("MyUIClass", "InputFolder:", nullptr));
+        label->setText(QCoreApplication::translate("MyUIClass", "InputFile :", nullptr));
         pushButton_8->setText(QCoreApplication::translate("MyUIClass", "saveGIF", nullptr));
         label_3->setText(QCoreApplication::translate("MyUIClass", "OutputPath : ", nullptr));
         label_13->setText(QCoreApplication::translate("MyUIClass", "00:00:00", nullptr));
@@ -305,6 +320,9 @@ public:
         label_6->setText(QCoreApplication::translate("MyUIClass", "Radiation", nullptr));
         pushButton_7->setText(QCoreApplication::translate("MyUIClass", "saveGIF", nullptr));
         label_10->setText(QString());
+        label_22->setText(QCoreApplication::translate("MyUIClass", "Selected : ", nullptr));
+        radioButton_3->setText(QCoreApplication::translate("MyUIClass", "File", nullptr));
+        radioButton_4->setText(QCoreApplication::translate("MyUIClass", "Folder", nullptr));
     } // retranslateUi
 
 };
