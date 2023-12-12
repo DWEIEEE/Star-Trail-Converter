@@ -10,7 +10,11 @@
 #include <QImageReader>
 #include <QButtonGroup>
 #include <QFileInfo>
+#include <iostream>
+#include <QThread>
 
+using namespace std;
+using namespace cv;
 
 MyUI::MyUI(QWidget *parent) : QWidget(parent)
 {
@@ -36,6 +40,8 @@ MyUI::MyUI(QWidget *parent) : QWidget(parent)
     connect(ui.radioButton, SIGNAL(clicked()), SLOT(generateMode()));
     connect(this, &MyUI::getInputPath, this, &MyUI::searchFolder);
     connect(this, &MyUI::getFiles, this, &MyUI::loadImg);
+    connect(this, &MyUI::getSegment, this, &MyUI::postSeg);
+    connect(this, &MyUI::getImg, this, &MyUI::postImg);
 }
 void MyUI::pushLeft()
 {
@@ -48,16 +54,19 @@ void MyUI::pushLeft()
     QString displayNumber = QString::number(now + 1) + "/" + QString::number(itemCount);
     ui.label_20->setText(displayNumber);
     ui.label_21->setText(files[now]);
-    QPixmap image(input_folderPath + "/" + files[now]);
-    QSize scaledSize0 = image.size().scaled(ui.label_9->size(), Qt::KeepAspectRatio);
-    QPixmap scaledPixmap0 = image.scaled(scaledSize0, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    ui.label_9->setPixmap(scaledPixmap0);
-    ui.label_10->setPixmap(scaledPixmap0);
-    ui.label_11->setPixmap(scaledPixmap0);
-    ui.label_12->setPixmap(scaledPixmap0);
-    QSize scaledSize = image.size().scaled(ui.label_16->size(), Qt::KeepAspectRatio);
-    QPixmap scaledPixmap = image.scaled(scaledSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    ui.label_16->setPixmap(scaledPixmap);
+    if (mode == true)
+    {
+        emit getImg((input_folderPath + "/" + files[now]), ui.label_9);
+        emit getSegment((input_folderPath + "/" + files[now]), ui.label_10);
+        emit getSegment((input_folderPath + "/" + files[now]), ui.label_11);
+        emit getSegment((input_folderPath + "/" + files[now]), ui.label_12);
+        emit getImg((input_folderPath + "/" + files[now]), ui.label_16);
+    }
+    else
+    {
+        emit getImg((input_folderPath + "/" + files[now]), ui.label_9);
+        emit getSegment((input_folderPath + "/" + files[now]), ui.label_11);
+    }
 }
 void MyUI::pushRight()
 {
@@ -70,33 +79,78 @@ void MyUI::pushRight()
     QString displayNumber = QString::number(now + 1) + "/" + QString::number(itemCount);
     ui.label_20->setText(displayNumber);
     ui.label_21->setText(files[now]);
-    QPixmap image(input_folderPath + "/" + files[now]);
-    QSize scaledSize0 = image.size().scaled(ui.label_9->size(), Qt::KeepAspectRatio);
-    QPixmap scaledPixmap0 = image.scaled(scaledSize0, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    ui.label_9->setPixmap(scaledPixmap0);
-    ui.label_10->setPixmap(scaledPixmap0);
-    ui.label_11->setPixmap(scaledPixmap0);
-    ui.label_12->setPixmap(scaledPixmap0);
-    QSize scaledSize = image.size().scaled(ui.label_16->size(), Qt::KeepAspectRatio);
-    QPixmap scaledPixmap = image.scaled(scaledSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    ui.label_16->setPixmap(scaledPixmap);
+    if (mode == true)
+    {
+        emit getImg((input_folderPath + "/" + files[now]), ui.label_9);
+        emit getSegment((input_folderPath + "/" + files[now]), ui.label_10);
+        emit getSegment((input_folderPath + "/" + files[now]), ui.label_11);
+        emit getSegment((input_folderPath + "/" + files[now]), ui.label_12);
+        emit getImg((input_folderPath + "/" + files[now]), ui.label_16);
+    }
+    else
+    {
+        emit getImg((input_folderPath + "/" + files[now]), ui.label_9);
+        emit getSegment((input_folderPath + "/" + files[now]), ui.label_11);
+    }
+}
+void MyUI::postImg(const QString& filepath, QLabel* label)
+{
+    QPixmap image(filepath);
+    QSize scaledSize0 = image.size().scaled(label->size(), Qt::KeepAspectRatio);
+    QPixmap scaledPixmap = image.scaled(scaledSize0, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    label->setPixmap(scaledPixmap);
+}
+void MyUI::postSeg(const QString& filepath, QLabel* label)
+{
+    string filename = filepath.toStdString();
+    Mat img = imread(filename, IMREAD_COLOR);
+    Mat outimg = img.clone();
+    Func.background(img, outimg);
+    QPixmap pixmap = QPixmap::fromImage(QImage(outimg.data, outimg.cols, outimg.rows, outimg.step, QImage::Format_BGR888));
+    QSize scaledSize = pixmap.size().scaled(label->size(), Qt::KeepAspectRatio);
+    QPixmap scaled_pixmap = pixmap.scaled(scaledSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    label->setPixmap(scaled_pixmap);
 }
 void MyUI::loadImg()
 {
-    itemCount = files.size();
-    ui.label_21->setText(files[now]);
-    QString displayNumber = QString::number(now + 1) + "/" + QString::number(itemCount);
-    ui.label_20->setText(displayNumber);
-    QPixmap image(input_folderPath + "/" + files[now]);
-    QSize scaledSize0 = image.size().scaled(ui.label_9->size(), Qt::KeepAspectRatio);
-    QPixmap scaledPixmap0 = image.scaled(scaledSize0, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    ui.label_9->setPixmap(scaledPixmap0);
-    ui.label_10->setPixmap(scaledPixmap0);
-    ui.label_11->setPixmap(scaledPixmap0);
-    ui.label_12->setPixmap(scaledPixmap0);
-    QSize scaledSize = image.size().scaled(ui.label_16->size(), Qt::KeepAspectRatio);
-    QPixmap scaledPixmap = image.scaled(scaledSize, Qt::KeepAspectRatio);
-    ui.label_16->setPixmap(scaledPixmap);
+    if (selected == false)
+    {
+        itemCount = files.size();
+        ui.label_21->setText(files[now]);
+        QString displayNumber = QString::number(now + 1) + "/" + QString::number(itemCount);
+        ui.label_20->setText(displayNumber);
+        if (mode = true)
+        {
+            emit getImg((input_folderPath + "/" + files[now]), ui.label_9);
+            emit getSegment((input_folderPath + "/" + files[now]), ui.label_10);
+            emit getSegment((input_folderPath + "/" + files[now]), ui.label_11);
+            emit getSegment((input_folderPath + "/" + files[now]), ui.label_12);
+            emit getImg((input_folderPath + "/" + files[now]), ui.label_16);
+        }
+        else
+        {
+            emit getImg((input_folderPath + "/" + files[now]), ui.label_9);
+            emit getSegment((input_folderPath + "/" + files[now]), ui.label_11);
+        }
+    }
+    else
+    {
+        if (mode = true)
+        {
+            ui.label_21->setText(files[now]);
+            emit getImg((input_folderPath + "/" + files[now]), ui.label_9);
+            emit getSegment((input_folderPath + "/" + files[now]), ui.label_10);
+            emit getSegment((input_folderPath + "/" + files[now]), ui.label_11);
+            emit getSegment((input_folderPath + "/" + files[now]), ui.label_12);
+            emit getImg((input_folderPath + "/" + files[now]), ui.label_16);
+        }
+        else
+        {
+            ui.label_21->setText(files[now]);
+            emit getImg((input_folderPath + "/" + files[now]), ui.label_9);
+            emit getSegment((input_folderPath + "/" + files[now]), ui.label_11);
+        }
+    }
 }
 void MyUI::searchFolder(const QString& path)
 {
@@ -169,6 +223,8 @@ void MyUI::changeFolder()
     now = 0;
     itemCount = 0;
     ui.label_20->setText("0/0");
+    ui.pushButton_11->setEnabled(true);
+    ui.pushButton_12->setEnabled(true);
 }
 void MyUI::changeFile()
 {
@@ -190,6 +246,7 @@ void MyUI::changeFile()
     ui.pushButton_12->setEnabled(false);
 }
 void MyUI::generateMode() {
+    mode = true;
     QPixmap blank("ui_img/blank.jpg");
     ui.label_9->setPixmap(blank);
     ui.label_10->setPixmap(blank);
@@ -216,6 +273,7 @@ void MyUI::generateMode() {
     ui.pushButton_10->show();
 }
 void MyUI::restoreMode() {
+    mode = false;
     QPixmap blank("ui_img/blank.jpg");
     ui.label_9->setPixmap(blank);
     ui.label_10->setPixmap(blank);
@@ -240,5 +298,4 @@ void MyUI::restoreMode() {
     ui.pushButton_8->hide();
     ui.pushButton_9->hide();
     ui.pushButton_10->hide();
-
 }
