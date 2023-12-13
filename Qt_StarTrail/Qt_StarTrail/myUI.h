@@ -11,7 +11,7 @@ public:
     explicit MyUI(QWidget *parent = nullptr);
 
 signals:
-    void getSegment(const QString& string, QLabel* label);
+    void getSegment(const QString& string, QLabel* label, QLabel* label_2 = nullptr, QLabel* label_3 = nullptr);
     void getImg(const QString& string, QLabel* label);
     void getInputPath(const QString& string);
     void getFiles();
@@ -26,7 +26,7 @@ private slots:
     void generateMode();
     void restoreMode();
     void searchFolder(const QString& string);
-    void postSeg(const QString& string, QLabel* label);
+    void DoSeg(const QString& string, QLabel* label, QLabel* label_2 = nullptr, QLabel* label_3 = nullptr);
     void postImg(const QString& string, QLabel* label);
     void loadImg();
 

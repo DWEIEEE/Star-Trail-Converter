@@ -1,2 +1,8 @@
-﻿  myUI.cpp
+﻿  moc myUI.h
+  moc func.h
+  func.cpp
+  main.cpp
+  myUI.cpp
+  moc_func.cpp
+  moc_myUI.cpp
   Qt_StarTrail.vcxproj -> C:\Users\DWEI\Desktop\course\ADIP\ADIP_Final\Qt_StarTrail\x64\Debug\Qt_StarTrail.exe

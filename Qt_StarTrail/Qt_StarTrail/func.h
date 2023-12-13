@@ -1,5 +1,6 @@
 #pragma once
 #include <QString>
+#include <QThread>
 #include <QtWidgets/QWidget>
 #include <opencv2/opencv.hpp>
 #include "ui_UI.h"
