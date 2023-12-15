@@ -1,4 +1,4 @@
-#include "myUI.h"
+﻿#include "myUI.h"
 #include <QFileDialog>
 #include <QStringList>
 #include <QDebug>
@@ -10,6 +10,7 @@
 #include <QButtonGroup>
 #include <QFileInfo>
 #include <iostream>
+#include <QLabel>
 
 using namespace std;
 using namespace cv;
@@ -28,6 +29,7 @@ MyUI::MyUI(QWidget *parent) : QWidget(parent)
     buttonGroup_2->addButton(ui.radioButton_2);
     ui.radioButton->setChecked(true);
     ui.radioButton_3->setChecked(true);
+    ui.label_16->installEventFilter(this);
     connect(ui.pushButton, SIGNAL(clicked()), SLOT(input_browse()));
     connect(ui.pushButton_2, SIGNAL(clicked()), SLOT(output_browse()));
     connect(ui.pushButton_11, SIGNAL(clicked()), SLOT(pushLeft()));
@@ -40,6 +42,39 @@ MyUI::MyUI(QWidget *parent) : QWidget(parent)
     connect(this, &MyUI::getFiles, this, &MyUI::loadImg);
     connect(this, &MyUI::getSegment, this, &MyUI::DoSeg);
     connect(this, &MyUI::getImg, this, &MyUI::postImg);
+}
+bool MyUI::eventFilter(QObject* obj, QEvent* event)
+{
+    if (obj == ui.label_16)
+    {
+        if (event->type() == QEvent::MouseButtonPress)
+        {
+            QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
+
+            if (mouseEvent->button() == Qt::LeftButton)
+            {
+                qDebug() << "LeftButton";
+                qDebug() << "X:" << mouseEvent->x() << " Y:" << mouseEvent->y();
+                QString display_str = "(" + QString::number(mouseEvent->x()) + ", " + QString::number(mouseEvent->y()) + ")";
+                ui.label_23->setText(display_str);
+                return true;
+            }
+            else
+            {
+                qDebug() << "RightButton";
+                qDebug() << "X:" << mouseEvent->x() << " Y:" << mouseEvent->y();
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+    else
+    {
+        return QWidget::eventFilter(obj, event);
+    }
 }
 void MyUI::pushLeft()
 {
@@ -56,7 +91,7 @@ void MyUI::pushLeft()
     {
         emit getImg((input_folderPath + "/" + files[now]), ui.label_9);
         emit getSegment((input_folderPath + "/" + files[now]), ui.label_10, ui.label_11, ui.label_12);
-        emit getImg((input_folderPath + "/" + files[now]), ui.label_16);
+        emit getImg((input_folderPath + "/" + files[now]), ui.label_16, true);
     }
     else
     {
@@ -79,7 +114,7 @@ void MyUI::pushRight()
     {
         emit getImg((input_folderPath + "/" + files[now]), ui.label_9);
         emit getSegment((input_folderPath + "/" + files[now]), ui.label_10, ui.label_11, ui.label_12);
-        emit getImg((input_folderPath + "/" + files[now]), ui.label_16);
+        emit getImg((input_folderPath + "/" + files[now]), ui.label_16, true);
     }
     else
     {
@@ -87,19 +122,36 @@ void MyUI::pushRight()
         emit getSegment((input_folderPath + "/" + files[now]), ui.label_11);
     }
 }
-void MyUI::postImg(const QString& filepath, QLabel* label)
+void MyUI::postImg(const QString& filepath, QLabel* label, bool resize)
 {
     QPixmap image(filepath);
-    QSize scaledSize0 = image.size().scaled(label->size(), Qt::KeepAspectRatio);
-    QPixmap scaledPixmap = image.scaled(scaledSize0, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    label->setPixmap(scaledPixmap);
+    if (resize == true)
+    {
+        label->move(760, 400);
+        label->setFixedSize(480, 270);
+        QSize scaledSize0 = image.size().scaled(label->size(), Qt::KeepAspectRatio);
+        QPixmap scaledPixmap = image.scaled(scaledSize0, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        label->setPixmap(scaledPixmap);
+        label->setFixedSize(scaledPixmap.size());
+        //qDebug() << "Width: " << scaledPixmap.width();
+        //qDebug() << "Height: " << scaledPixmap.height();
+        label->move(760 + ((480 - scaledPixmap.width()) / 2), 400 + ((270 - scaledPixmap.height()) / 2));
+    }
+    else
+    {
+        QSize scaledSize0 = image.size().scaled(label->size(), Qt::KeepAspectRatio);
+        QPixmap scaledPixmap = image.scaled(scaledSize0, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        label->setPixmap(scaledPixmap);
+    }
 }
 void MyUI::DoSeg(const QString& filepath, QLabel* label, QLabel* label_2, QLabel* label_3)
 {
     string filename = filepath.toStdString();
     Mat img = imread(filename, IMREAD_COLOR);
-    Mat outimg = img.clone();
-    Func.background(img, outimg);
+    Mat resize_img;
+    Func.Resize(img, resize_img, 640);
+    Mat outimg;
+    Func.background(resize_img, outimg);
     QPixmap pixmap = QPixmap::fromImage(QImage(outimg.data, outimg.cols, outimg.rows, outimg.step, QImage::Format_BGR888));
     QSize scaledSize = pixmap.size().scaled(label->size(), Qt::KeepAspectRatio);
     QPixmap scaled_pixmap = pixmap.scaled(scaledSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
@@ -119,11 +171,11 @@ void MyUI::loadImg()
         ui.label_21->setText(files[now]);
         QString displayNumber = QString::number(now + 1) + "/" + QString::number(itemCount);
         ui.label_20->setText(displayNumber);
-        if (mode = true)
+        if (mode == true)
         {
             emit getImg((input_folderPath + "/" + files[now]), ui.label_9);
             emit getSegment((input_folderPath + "/" + files[now]), ui.label_10, ui.label_11, ui.label_12);
-            emit getImg((input_folderPath + "/" + files[now]), ui.label_16);
+            emit getImg((input_folderPath + "/" + files[now]), ui.label_16, true);
         }
         else
         {
@@ -133,12 +185,12 @@ void MyUI::loadImg()
     }
     else
     {
-        if (mode = true)
+        if (mode == true)
         {
             ui.label_21->setText(files[now]);
             emit getImg((input_folderPath + "/" + files[now]), ui.label_9);
             emit getSegment((input_folderPath + "/" + files[now]), ui.label_10, ui.label_11, ui.label_12);
-            emit getImg((input_folderPath + "/" + files[now]), ui.label_16);
+            emit getImg((input_folderPath + "/" + files[now]), ui.label_16, true);
         }
         else
         {
@@ -209,6 +261,9 @@ void MyUI::changeFolder()
     selected = false;
     ui.lineEdit->setText("");
     ui.label_21->setText("");
+    ui.label_23->setText("");
+    ui.label_16->move(760, 400);
+    ui.label_16->setFixedSize(480, 270);
     QPixmap blank("ui_img/blank.jpg");
     ui.label_9->setPixmap(blank);
     ui.label_10->setPixmap(blank);
@@ -228,6 +283,9 @@ void MyUI::changeFile()
     selected = true;
     ui.lineEdit->setText("");
     ui.label_21->setText("");
+    ui.label_23->setText("");
+    ui.label_16->move(760, 400);
+    ui.label_16->setFixedSize(480, 270);
     QPixmap blank("ui_img/blank.jpg");
     ui.label_9->setPixmap(blank);
     ui.label_10->setPixmap(blank);
@@ -243,6 +301,8 @@ void MyUI::changeFile()
 }
 void MyUI::generateMode() {
     mode = true;
+    ui.label_16->move(760, 400);
+    ui.label_16->setFixedSize(480, 270);
     QPixmap blank("ui_img/blank.jpg");
     ui.label_9->setPixmap(blank);
     ui.label_10->setPixmap(blank);
@@ -274,6 +334,8 @@ void MyUI::generateMode() {
 }
 void MyUI::restoreMode() {
     mode = false;
+    ui.label_16->move(760, 400);
+    ui.label_16->setFixedSize(480, 270);
     QPixmap blank("ui_img/blank.jpg");
     ui.label_9->setPixmap(blank);
     ui.label_10->setPixmap(blank);
@@ -282,6 +344,7 @@ void MyUI::restoreMode() {
     ui.label_16->setPixmap(blank);
     ui.lineEdit->setText("");
     ui.label_21->setText("");
+    ui.label_23->setText("");
     ui.label_20->setText("0/0");
     ui.label_5->setText("Starry Sky");
     files.clear();

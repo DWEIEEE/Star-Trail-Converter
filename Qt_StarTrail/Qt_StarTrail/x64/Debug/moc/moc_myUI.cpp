@@ -27,7 +27,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 namespace {
 struct qt_meta_stringdata_MyUI_t {
-    uint offsetsAndSizes[46];
+    uint offsetsAndSizes[48];
     char stringdata0[5];
     char stringdata1[11];
     char stringdata2[1];
@@ -37,20 +37,21 @@ struct qt_meta_stringdata_MyUI_t {
     char stringdata6[8];
     char stringdata7[8];
     char stringdata8[7];
-    char stringdata9[13];
-    char stringdata10[9];
-    char stringdata11[13];
-    char stringdata12[14];
-    char stringdata13[9];
-    char stringdata14[10];
-    char stringdata15[13];
-    char stringdata16[11];
-    char stringdata17[13];
-    char stringdata18[12];
-    char stringdata19[13];
-    char stringdata20[6];
-    char stringdata21[8];
+    char stringdata9[7];
+    char stringdata10[13];
+    char stringdata11[9];
+    char stringdata12[13];
+    char stringdata13[14];
+    char stringdata14[9];
+    char stringdata15[10];
+    char stringdata16[13];
+    char stringdata17[11];
+    char stringdata18[13];
+    char stringdata19[12];
+    char stringdata20[13];
+    char stringdata21[6];
     char stringdata22[8];
+    char stringdata23[8];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_MyUI_t::offsetsAndSizes) + ofs), len 
@@ -65,20 +66,21 @@ Q_CONSTINIT static const qt_meta_stringdata_MyUI_t qt_meta_stringdata_MyUI = {
         QT_MOC_LITERAL(38, 7),  // "label_2"
         QT_MOC_LITERAL(46, 7),  // "label_3"
         QT_MOC_LITERAL(54, 6),  // "getImg"
-        QT_MOC_LITERAL(61, 12),  // "getInputPath"
-        QT_MOC_LITERAL(74, 8),  // "getFiles"
-        QT_MOC_LITERAL(83, 12),  // "input_browse"
-        QT_MOC_LITERAL(96, 13),  // "output_browse"
-        QT_MOC_LITERAL(110, 8),  // "pushLeft"
-        QT_MOC_LITERAL(119, 9),  // "pushRight"
-        QT_MOC_LITERAL(129, 12),  // "changeFolder"
-        QT_MOC_LITERAL(142, 10),  // "changeFile"
-        QT_MOC_LITERAL(153, 12),  // "generateMode"
-        QT_MOC_LITERAL(166, 11),  // "restoreMode"
-        QT_MOC_LITERAL(178, 12),  // "searchFolder"
-        QT_MOC_LITERAL(191, 5),  // "DoSeg"
-        QT_MOC_LITERAL(197, 7),  // "postImg"
-        QT_MOC_LITERAL(205, 7)   // "loadImg"
+        QT_MOC_LITERAL(61, 6),  // "resize"
+        QT_MOC_LITERAL(68, 12),  // "getInputPath"
+        QT_MOC_LITERAL(81, 8),  // "getFiles"
+        QT_MOC_LITERAL(90, 12),  // "input_browse"
+        QT_MOC_LITERAL(103, 13),  // "output_browse"
+        QT_MOC_LITERAL(117, 8),  // "pushLeft"
+        QT_MOC_LITERAL(126, 9),  // "pushRight"
+        QT_MOC_LITERAL(136, 12),  // "changeFolder"
+        QT_MOC_LITERAL(149, 10),  // "changeFile"
+        QT_MOC_LITERAL(160, 12),  // "generateMode"
+        QT_MOC_LITERAL(173, 11),  // "restoreMode"
+        QT_MOC_LITERAL(185, 12),  // "searchFolder"
+        QT_MOC_LITERAL(198, 5),  // "DoSeg"
+        QT_MOC_LITERAL(204, 7),  // "postImg"
+        QT_MOC_LITERAL(212, 7)   // "loadImg"
     },
     "MyUI",
     "getSegment",
@@ -89,6 +91,7 @@ Q_CONSTINIT static const qt_meta_stringdata_MyUI_t qt_meta_stringdata_MyUI = {
     "label_2",
     "label_3",
     "getImg",
+    "resize",
     "getInputPath",
     "getFiles",
     "input_browse",
@@ -113,41 +116,44 @@ Q_CONSTINIT static const uint qt_meta_data_MyUI[] = {
       10,       // revision
        0,       // classname
        0,    0, // classinfo
-      20,   14, // methods
+      22,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       6,       // signalCount
+       7,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    4,  134,    2, 0x06,    1 /* Public */,
-       1,    3,  143,    2, 0x26,    6 /* Public | MethodCloned */,
-       1,    2,  150,    2, 0x26,   10 /* Public | MethodCloned */,
-       8,    2,  155,    2, 0x06,   13 /* Public */,
-       9,    1,  160,    2, 0x06,   16 /* Public */,
-      10,    0,  163,    2, 0x06,   18 /* Public */,
+       1,    4,  146,    2, 0x06,    1 /* Public */,
+       1,    3,  155,    2, 0x26,    6 /* Public | MethodCloned */,
+       1,    2,  162,    2, 0x26,   10 /* Public | MethodCloned */,
+       8,    3,  167,    2, 0x06,   13 /* Public */,
+       8,    2,  174,    2, 0x26,   17 /* Public | MethodCloned */,
+      10,    1,  179,    2, 0x06,   20 /* Public */,
+      11,    0,  182,    2, 0x06,   22 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-      11,    0,  164,    2, 0x08,   19 /* Private */,
-      12,    0,  165,    2, 0x08,   20 /* Private */,
-      13,    0,  166,    2, 0x08,   21 /* Private */,
-      14,    0,  167,    2, 0x08,   22 /* Private */,
-      15,    0,  168,    2, 0x08,   23 /* Private */,
-      16,    0,  169,    2, 0x08,   24 /* Private */,
-      17,    0,  170,    2, 0x08,   25 /* Private */,
-      18,    0,  171,    2, 0x08,   26 /* Private */,
-      19,    1,  172,    2, 0x08,   27 /* Private */,
-      20,    4,  175,    2, 0x08,   29 /* Private */,
-      20,    3,  184,    2, 0x28,   34 /* Private | MethodCloned */,
-      20,    2,  191,    2, 0x28,   38 /* Private | MethodCloned */,
-      21,    2,  196,    2, 0x08,   41 /* Private */,
-      22,    0,  201,    2, 0x08,   44 /* Private */,
+      12,    0,  183,    2, 0x08,   23 /* Private */,
+      13,    0,  184,    2, 0x08,   24 /* Private */,
+      14,    0,  185,    2, 0x08,   25 /* Private */,
+      15,    0,  186,    2, 0x08,   26 /* Private */,
+      16,    0,  187,    2, 0x08,   27 /* Private */,
+      17,    0,  188,    2, 0x08,   28 /* Private */,
+      18,    0,  189,    2, 0x08,   29 /* Private */,
+      19,    0,  190,    2, 0x08,   30 /* Private */,
+      20,    1,  191,    2, 0x08,   31 /* Private */,
+      21,    4,  194,    2, 0x08,   33 /* Private */,
+      21,    3,  203,    2, 0x28,   38 /* Private | MethodCloned */,
+      21,    2,  210,    2, 0x28,   42 /* Private | MethodCloned */,
+      22,    3,  215,    2, 0x08,   45 /* Private */,
+      22,    2,  222,    2, 0x28,   49 /* Private | MethodCloned */,
+      23,    0,  227,    2, 0x08,   52 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString, 0x80000000 | 4, 0x80000000 | 4, 0x80000000 | 4,    3,    5,    6,    7,
     QMetaType::Void, QMetaType::QString, 0x80000000 | 4, 0x80000000 | 4,    3,    5,    6,
     QMetaType::Void, QMetaType::QString, 0x80000000 | 4,    3,    5,
+    QMetaType::Void, QMetaType::QString, 0x80000000 | 4, QMetaType::Bool,    3,    5,    9,
     QMetaType::Void, QMetaType::QString, 0x80000000 | 4,    3,    5,
     QMetaType::Void, QMetaType::QString,    3,
     QMetaType::Void,
@@ -165,6 +171,7 @@ Q_CONSTINIT static const uint qt_meta_data_MyUI[] = {
     QMetaType::Void, QMetaType::QString, 0x80000000 | 4, 0x80000000 | 4, 0x80000000 | 4,    3,    5,    6,    7,
     QMetaType::Void, QMetaType::QString, 0x80000000 | 4, 0x80000000 | 4,    3,    5,    6,
     QMetaType::Void, QMetaType::QString, 0x80000000 | 4,    3,    5,
+    QMetaType::Void, QMetaType::QString, 0x80000000 | 4, QMetaType::Bool,    3,    5,    9,
     QMetaType::Void, QMetaType::QString, 0x80000000 | 4,    3,    5,
     QMetaType::Void,
 
@@ -195,6 +202,11 @@ Q_CONSTINIT const QMetaObject MyUI::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<const QString &, std::false_type>,
         QtPrivate::TypeAndForceComplete<QLabel *, std::false_type>,
+        // method 'getImg'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<const QString &, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QLabel *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<bool, std::false_type>,
         // method 'getImg'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<const QString &, std::false_type>,
@@ -242,6 +254,11 @@ Q_CONSTINIT const QMetaObject MyUI::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<const QString &, std::false_type>,
         QtPrivate::TypeAndForceComplete<QLabel *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<bool, std::false_type>,
+        // method 'postImg'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<const QString &, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QLabel *, std::false_type>,
         // method 'loadImg'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
@@ -257,23 +274,25 @@ void MyUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void *
         case 0: _t->getSegment((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QLabel*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QLabel*>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QLabel*>>(_a[4]))); break;
         case 1: _t->getSegment((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QLabel*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QLabel*>>(_a[3]))); break;
         case 2: _t->getSegment((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QLabel*>>(_a[2]))); break;
-        case 3: _t->getImg((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QLabel*>>(_a[2]))); break;
-        case 4: _t->getInputPath((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
-        case 5: _t->getFiles(); break;
-        case 6: _t->input_browse(); break;
-        case 7: _t->output_browse(); break;
-        case 8: _t->pushLeft(); break;
-        case 9: _t->pushRight(); break;
-        case 10: _t->changeFolder(); break;
-        case 11: _t->changeFile(); break;
-        case 12: _t->generateMode(); break;
-        case 13: _t->restoreMode(); break;
-        case 14: _t->searchFolder((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
-        case 15: _t->DoSeg((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QLabel*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QLabel*>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QLabel*>>(_a[4]))); break;
-        case 16: _t->DoSeg((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QLabel*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QLabel*>>(_a[3]))); break;
-        case 17: _t->DoSeg((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QLabel*>>(_a[2]))); break;
-        case 18: _t->postImg((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QLabel*>>(_a[2]))); break;
-        case 19: _t->loadImg(); break;
+        case 3: _t->getImg((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QLabel*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[3]))); break;
+        case 4: _t->getImg((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QLabel*>>(_a[2]))); break;
+        case 5: _t->getInputPath((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
+        case 6: _t->getFiles(); break;
+        case 7: _t->input_browse(); break;
+        case 8: _t->output_browse(); break;
+        case 9: _t->pushLeft(); break;
+        case 10: _t->pushRight(); break;
+        case 11: _t->changeFolder(); break;
+        case 12: _t->changeFile(); break;
+        case 13: _t->generateMode(); break;
+        case 14: _t->restoreMode(); break;
+        case 15: _t->searchFolder((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
+        case 16: _t->DoSeg((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QLabel*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QLabel*>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QLabel*>>(_a[4]))); break;
+        case 17: _t->DoSeg((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QLabel*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QLabel*>>(_a[3]))); break;
+        case 18: _t->DoSeg((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QLabel*>>(_a[2]))); break;
+        case 19: _t->postImg((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QLabel*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[3]))); break;
+        case 20: _t->postImg((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QLabel*>>(_a[2]))); break;
+        case 21: _t->loadImg(); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -310,7 +329,14 @@ void MyUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void *
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QLabel* >(); break;
             }
             break;
-        case 15:
+        case 4:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
+            case 1:
+                *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QLabel* >(); break;
+            }
+            break;
+        case 16:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 3:
@@ -319,7 +345,7 @@ void MyUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void *
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QLabel* >(); break;
             }
             break;
-        case 16:
+        case 17:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 2:
@@ -327,14 +353,21 @@ void MyUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void *
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QLabel* >(); break;
             }
             break;
-        case 17:
+        case 18:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 1:
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QLabel* >(); break;
             }
             break;
-        case 18:
+        case 19:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
+            case 1:
+                *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QLabel* >(); break;
+            }
+            break;
+        case 20:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 1:
@@ -352,7 +385,7 @@ void MyUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void *
             }
         }
         {
-            using _t = void (MyUI::*)(const QString & , QLabel * );
+            using _t = void (MyUI::*)(const QString & , QLabel * , bool );
             if (_t _q_method = &MyUI::getImg; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
                 *result = 3;
                 return;
@@ -361,14 +394,14 @@ void MyUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void *
         {
             using _t = void (MyUI::*)(const QString & );
             if (_t _q_method = &MyUI::getInputPath; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
-                *result = 4;
+                *result = 5;
                 return;
             }
         }
         {
             using _t = void (MyUI::*)();
             if (_t _q_method = &MyUI::getFiles; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
-                *result = 5;
+                *result = 6;
                 return;
             }
         }
@@ -394,13 +427,13 @@ int MyUI::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 20)
+        if (_id < 22)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 20;
+        _id -= 22;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 20)
+        if (_id < 22)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 20;
+        _id -= 22;
     }
     return _id;
 }
@@ -413,23 +446,23 @@ void MyUI::getSegment(const QString & _t1, QLabel * _t2, QLabel * _t3, QLabel * 
 }
 
 // SIGNAL 3
-void MyUI::getImg(const QString & _t1, QLabel * _t2)
+void MyUI::getImg(const QString & _t1, QLabel * _t2, bool _t3)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t3))) };
     QMetaObject::activate(this, &staticMetaObject, 3, _a);
 }
 
-// SIGNAL 4
+// SIGNAL 5
 void MyUI::getInputPath(const QString & _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
-    QMetaObject::activate(this, &staticMetaObject, 4, _a);
+    QMetaObject::activate(this, &staticMetaObject, 5, _a);
 }
 
-// SIGNAL 5
+// SIGNAL 6
 void MyUI::getFiles()
 {
-    QMetaObject::activate(this, &staticMetaObject, 5, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 6, nullptr);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

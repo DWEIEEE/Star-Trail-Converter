@@ -41,7 +41,6 @@ public:
     QLabel *label_4;
     QLineEdit *lineEdit;
     QPushButton *pushButton_9;
-    QLabel *label_16;
     QLabel *label_18;
     QPushButton *pushButton_10;
     QLabel *label_2;
@@ -62,6 +61,8 @@ public:
     QLabel *label_22;
     QRadioButton *radioButton_3;
     QRadioButton *radioButton_4;
+    QLabel *label_23;
+    QLabel *label_16;
 
     void setupUi(QWidget *MyUIClass)
     {
@@ -154,7 +155,7 @@ public:
         label_8->setFont(font7);
         label_17 = new QLabel(MyUIClass);
         label_17->setObjectName("label_17");
-        label_17->setGeometry(QRect(760, 360, 391, 30));
+        label_17->setGeometry(QRect(760, 360, 201, 30));
         label_17->setFont(font7);
         pushButton_11 = new QPushButton(MyUIClass);
         pushButton_11->setObjectName("pushButton_11");
@@ -188,12 +189,6 @@ public:
         pushButton_9 = new QPushButton(MyUIClass);
         pushButton_9->setObjectName("pushButton_9");
         pushButton_9->setGeometry(QRect(1165, 360, 30, 30));
-        label_16 = new QLabel(MyUIClass);
-        label_16->setObjectName("label_16");
-        label_16->setGeometry(QRect(760, 400, 480, 270));
-        label_16->setPixmap(QPixmap(QString::fromUtf8(":/MyUI/ui_img/blank.jpg")));
-        label_16->setScaledContents(false);
-        label_16->setAlignment(Qt::AlignCenter);
         label_18 = new QLabel(MyUIClass);
         label_18->setObjectName("label_18");
         label_18->setGeometry(QRect(60, 60, 661, 50));
@@ -276,6 +271,16 @@ public:
         radioButton_4->setObjectName("radioButton_4");
         radioButton_4->setGeometry(QRect(990, 60, 100, 30));
         radioButton_4->setFont(font7);
+        label_23 = new QLabel(MyUIClass);
+        label_23->setObjectName("label_23");
+        label_23->setGeometry(QRect(990, 360, 161, 30));
+        label_23->setFont(font7);
+        label_23->setAlignment(Qt::AlignCenter);
+        label_16 = new QLabel(MyUIClass);
+        label_16->setObjectName("label_16");
+        label_16->setGeometry(QRect(760, 400, 480, 270));
+        label_16->setPixmap(QPixmap(QString::fromUtf8(":/MyUI/ui_img/blank.jpg")));
+        label_16->setAlignment(Qt::AlignCenter);
 
         retranslateUi(MyUIClass);
 
@@ -303,7 +308,6 @@ public:
         label_20->setText(QCoreApplication::translate("MyUIClass", "0/0", nullptr));
         label_4->setText(QCoreApplication::translate("MyUIClass", "Original", nullptr));
         pushButton_9->setText(QString());
-        label_16->setText(QString());
         label_18->setText(QCoreApplication::translate("MyUIClass", "Star Trail Generator", nullptr));
         pushButton_10->setText(QString());
         label_2->setText(QCoreApplication::translate("MyUIClass", "FileName : ", nullptr));
@@ -323,6 +327,8 @@ public:
         label_22->setText(QCoreApplication::translate("MyUIClass", "Selected : ", nullptr));
         radioButton_3->setText(QCoreApplication::translate("MyUIClass", "File", nullptr));
         radioButton_4->setText(QCoreApplication::translate("MyUIClass", "Folder", nullptr));
+        label_23->setText(QString());
+        label_16->setText(QString());
     } // retranslateUi
 
 };

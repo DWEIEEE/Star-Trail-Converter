@@ -11,9 +11,11 @@ class Func : public QWidget
 
 public:
     Func(QWidget* parent = nullptr);
-    void loadImg(QString);
+    void showImg(cv::Mat img);
+    void Resize(cv::Mat img, cv::Mat& out_img, double threshold);
     void background(cv::Mat img1, cv::Mat& img_out);
     void foreground(cv::Mat img1, cv::Mat img_back, cv::Mat& img_out);
+
 private:
     Ui::MyUIClass ui;
 };
