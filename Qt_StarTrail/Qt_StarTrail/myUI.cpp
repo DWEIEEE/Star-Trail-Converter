@@ -11,6 +11,8 @@
 #include <QFileInfo>
 #include <iostream>
 #include <QLabel>
+#include <QPainter>
+#include <QPen>
 
 using namespace std;
 using namespace cv;
@@ -18,6 +20,7 @@ using namespace cv;
 MyUI::MyUI(QWidget *parent) : QWidget(parent)
 {
     ui.setupUi(this);
+    setFixedSize(1290, 720);
     ui.pushButton_11->setEnabled(false);
     ui.pushButton_12->setEnabled(false);
     QImageReader::setAllocationLimit(0);
@@ -42,10 +45,11 @@ MyUI::MyUI(QWidget *parent) : QWidget(parent)
     connect(this, &MyUI::getFiles, this, &MyUI::loadImg);
     connect(this, &MyUI::getSegment, this, &MyUI::DoSeg);
     connect(this, &MyUI::getImg, this, &MyUI::postImg);
+    connect(this, &MyUI::getPos, this, &MyUI::drawPos);
 }
 bool MyUI::eventFilter(QObject* obj, QEvent* event)
 {
-    if (obj == ui.label_16)
+    if (obj == ui.label_16 and touch_lock == false)
     {
         if (event->type() == QEvent::MouseButtonPress)
         {
@@ -54,9 +58,12 @@ bool MyUI::eventFilter(QObject* obj, QEvent* event)
             if (mouseEvent->button() == Qt::LeftButton)
             {
                 qDebug() << "LeftButton";
-                qDebug() << "X:" << mouseEvent->x() << " Y:" << mouseEvent->y();
-                QString display_str = "(" + QString::number(mouseEvent->x()) + ", " + QString::number(mouseEvent->y()) + ")";
+                qDebug() << "label => X:" << mouseEvent->x() << " Y:" << mouseEvent->y();
+                touch_x = round(mouseEvent->x() * (origin_height - 1) / (seg_height - 1));
+                touch_y = round(mouseEvent->y() * (origin_width - 1) / (seg_width - 1));
+                QString display_str = "(" + QString::number(mouseEvent->x()) + ", " + QString::number(mouseEvent->y()) + ") => (" + QString::number(touch_x) + ", " + QString::number(touch_y) + ")";
                 ui.label_23->setText(display_str);
+                emit getPos(mouseEvent->x(), mouseEvent->y());
                 return true;
             }
             else
@@ -76,6 +83,17 @@ bool MyUI::eventFilter(QObject* obj, QEvent* event)
         return QWidget::eventFilter(obj, event);
     }
 }
+void MyUI::drawPos(int x, int y)
+{
+    QPixmap tmp = touchscreen;
+    QPainter painter(&tmp);
+    QPen pen;
+    pen.setColor(QColor(255, 120, 47));
+    pen.setWidth(2);
+    painter.setPen(pen);
+    painter.drawEllipse(QPoint(x, y), 5, 5);
+    ui.label_16->setPixmap(tmp);
+}
 void MyUI::pushLeft()
 {
     if (now != 0) {
@@ -87,6 +105,7 @@ void MyUI::pushLeft()
     QString displayNumber = QString::number(now + 1) + "/" + QString::number(itemCount);
     ui.label_20->setText(displayNumber);
     ui.label_21->setText(files[now]);
+    ui.label_23->setText("");
     if (mode == true)
     {
         emit getImg((input_folderPath + "/" + files[now]), ui.label_9);
@@ -110,6 +129,7 @@ void MyUI::pushRight()
     QString displayNumber = QString::number(now + 1) + "/" + QString::number(itemCount);
     ui.label_20->setText(displayNumber);
     ui.label_21->setText(files[now]);
+    ui.label_23->setText("");
     if (mode == true)
     {
         emit getImg((input_folderPath + "/" + files[now]), ui.label_9);
@@ -131,10 +151,19 @@ void MyUI::postImg(const QString& filepath, QLabel* label, bool resize)
         label->setFixedSize(480, 270);
         QSize scaledSize0 = image.size().scaled(label->size(), Qt::KeepAspectRatio);
         QPixmap scaledPixmap = image.scaled(scaledSize0, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        touchscreen = scaledPixmap;
+        /*
+        QPainter painter(&scaledPixmap);
+        QPen pen;
+        pen.setColor(Qt::red);
+        pen.setWidth(2);
+        painter.setPen(pen);
+        painter.drawEllipse(QPoint(50, 50), 5, 5);
+        */
         label->setPixmap(scaledPixmap);
         label->setFixedSize(scaledPixmap.size());
-        //qDebug() << "Width: " << scaledPixmap.width();
-        //qDebug() << "Height: " << scaledPixmap.height();
+        seg_width = scaledPixmap.width();
+        seg_height =  scaledPixmap.height();
         label->move(760 + ((480 - scaledPixmap.width()) / 2), 400 + ((270 - scaledPixmap.height()) / 2));
     }
     else
@@ -150,6 +179,8 @@ void MyUI::DoSeg(const QString& filepath, QLabel* label, QLabel* label_2, QLabel
     Mat img = imread(filename, IMREAD_COLOR);
     Mat resize_img;
     Func.Resize(img, resize_img, 640);
+    origin_height = resize_img.rows;
+    origin_width = resize_img.cols;
     Mat outimg;
     Func.background(resize_img, outimg);
     QPixmap pixmap = QPixmap::fromImage(QImage(outimg.data, outimg.cols, outimg.rows, outimg.step, QImage::Format_BGR888));
@@ -227,6 +258,7 @@ void MyUI::input_browse()
             qDebug() << "No folder selected. Please choose a folder.";
             return;
         }
+        touch_lock = false;
         ui.lineEdit->setText(input_folderPath);
         emit getInputPath(input_folderPath);
     }
@@ -237,6 +269,7 @@ void MyUI::input_browse()
             qDebug() << "No files selected. Please choose a file.";
             return;
         }
+        touch_lock = false;
         ui.lineEdit->setText(input_filePath);
         QFileInfo fileInfo(input_filePath);
         input_folderPath = fileInfo.path();
@@ -259,6 +292,7 @@ void MyUI::changeFolder()
 {
     ui.label->setText("InputFolder :");
     selected = false;
+    touch_lock = true;
     ui.lineEdit->setText("");
     ui.label_21->setText("");
     ui.label_23->setText("");
@@ -281,6 +315,7 @@ void MyUI::changeFile()
 {
     ui.label->setText("InputFile :");
     selected = true;
+    touch_lock = true;
     ui.lineEdit->setText("");
     ui.label_21->setText("");
     ui.label_23->setText("");
@@ -301,6 +336,7 @@ void MyUI::changeFile()
 }
 void MyUI::generateMode() {
     mode = true;
+    touch_lock = true;
     ui.label_16->move(760, 400);
     ui.label_16->setFixedSize(480, 270);
     QPixmap blank("ui_img/blank.jpg");
@@ -334,6 +370,7 @@ void MyUI::generateMode() {
 }
 void MyUI::restoreMode() {
     mode = false;
+    touch_lock = true;
     ui.label_16->move(760, 400);
     ui.label_16->setFixedSize(480, 270);
     QPixmap blank("ui_img/blank.jpg");

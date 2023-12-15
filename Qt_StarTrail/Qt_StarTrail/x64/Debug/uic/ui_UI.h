@@ -273,7 +273,7 @@ public:
         radioButton_4->setFont(font7);
         label_23 = new QLabel(MyUIClass);
         label_23->setObjectName("label_23");
-        label_23->setGeometry(QRect(990, 360, 161, 30));
+        label_23->setGeometry(QRect(950, 360, 171, 30));
         label_23->setFont(font7);
         label_23->setAlignment(Qt::AlignCenter);
         label_16 = new QLabel(MyUIClass);

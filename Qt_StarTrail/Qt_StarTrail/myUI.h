@@ -16,6 +16,7 @@ signals:
     void getSegment(const QString& string, QLabel* label, QLabel* label_2 = nullptr, QLabel* label_3 = nullptr);
     void getImg(const QString& string, QLabel* label, bool resize = false);
     void getInputPath(const QString& string);
+    void getPos(int x, int y);
     void getFiles();
 
 private slots:
@@ -31,6 +32,7 @@ private slots:
     void DoSeg(const QString& string, QLabel* label, QLabel* label_2 = nullptr, QLabel* label_3 = nullptr);
     void postImg(const QString& string, QLabel* label, bool resize = false);
     void loadImg();
+    void drawPos(int x, int y);
 
 private:
     Ui::MyUIClass ui;
@@ -41,4 +43,12 @@ private:
     QString input_folderPath;
     bool selected = true;
     bool mode = true;
+    bool touch_lock = true;
+    QPixmap touchscreen;
+    int origin_height;
+    int origin_width;
+    int seg_height;
+    int seg_width;
+    int touch_x;
+    int touch_y;
 };
