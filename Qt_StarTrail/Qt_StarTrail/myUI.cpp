@@ -13,6 +13,7 @@
 #include <QLabel>
 #include <QPainter>
 #include <QPen>
+#include <QMessageBox>
 
 using namespace std;
 using namespace cv;
@@ -33,8 +34,14 @@ MyUI::MyUI(QWidget *parent) : QWidget(parent)
     ui.radioButton->setChecked(true);
     ui.radioButton_3->setChecked(true);
     ui.label_16->installEventFilter(this);
+    penO.setColor(QColor(255, 120, 47));
+    penO.setWidth(2);
+    penR.setColor(QColor(255, 0, 0));
+    penR.setWidth(2);
     connect(ui.pushButton, SIGNAL(clicked()), SLOT(input_browse()));
     connect(ui.pushButton_2, SIGNAL(clicked()), SLOT(output_browse()));
+    connect(ui.pushButton_9, SIGNAL(clicked()), SLOT(backPos()));
+    connect(ui.pushButton_10, SIGNAL(clicked()), SLOT(newPos()));
     connect(ui.pushButton_11, SIGNAL(clicked()), SLOT(pushLeft()));
     connect(ui.pushButton_12, SIGNAL(clicked()), SLOT(pushRight()));
     connect(ui.radioButton_4, SIGNAL(clicked()), SLOT(changeFolder()));
@@ -61,9 +68,7 @@ bool MyUI::eventFilter(QObject* obj, QEvent* event)
                 qDebug() << "label => X:" << mouseEvent->x() << " Y:" << mouseEvent->y();
                 touch_x = round(mouseEvent->x() * (origin_height - 1) / (seg_height - 1));
                 touch_y = round(mouseEvent->y() * (origin_width - 1) / (seg_width - 1));
-                QString display_str = "(" + QString::number(mouseEvent->x()) + ", " + QString::number(mouseEvent->y()) + ") => (" + QString::number(touch_x) + ", " + QString::number(touch_y) + ")";
-                ui.label_23->setText(display_str);
-                emit getPos(mouseEvent->x(), mouseEvent->y());
+                emit getPos(mouseEvent->x(), mouseEvent->y(), touch_x, touch_y, penO);
                 return true;
             }
             else
@@ -83,16 +88,49 @@ bool MyUI::eventFilter(QObject* obj, QEvent* event)
         return QWidget::eventFilter(obj, event);
     }
 }
-void MyUI::drawPos(int x, int y)
+void MyUI::drawPos(int x, int y, int tx, int ty, QPen pen)
 {
     QPixmap tmp = touchscreen;
     QPainter painter(&tmp);
-    QPen pen;
-    pen.setColor(QColor(255, 120, 47));
-    pen.setWidth(2);
     painter.setPen(pen);
     painter.drawEllipse(QPoint(x, y), 5, 5);
     ui.label_16->setPixmap(tmp);
+    QString display_str = "(" + QString::number(x) + ", " + QString::number(y) + ") => (" + QString::number(tx) + ", " + QString::number(ty) + ")";
+    ui.label_23->setText(display_str);
+}
+void MyUI::backPos()
+{
+    emit getPos(ceil(star_x * (seg_height - 1) / (origin_height - 1)), ceil(star_y * (seg_width - 1) / (origin_width - 1)), star_x, star_y, penR);
+}
+void MyUI::newPos()
+{
+    if (touch_x == star_x and touch_y == star_y)
+    {
+        QMessageBox MBox(QMessageBox::Warning, "", "");
+        MBox.setWindowTitle("Notice");
+        MBox.setText("You didn't change the center of the circle.");
+        MBox.setWindowFlags(Qt::Dialog);
+        QPushButton* CancelBut = MBox.addButton("Cancel", QMessageBox::AcceptRole);
+        MBox.exec();
+        qDebug() << "You didn/'t change the center of the circle";
+    }
+    else
+    {
+        QMessageBox MBox(QMessageBox::Question, "", "");
+        MBox.setWindowTitle("Hint");
+        MBox.setWindowFlags(Qt::Dialog);
+        QString display_str = "from (" + QString::number(star_x) + ", " + QString::number(star_y) + ") to (" + QString::number(touch_x) + ", " + QString::number(touch_y) + ") ?";
+        MBox.setText("Are you sure to change the center of the circle\n" + display_str);
+        QPushButton* agreeBut = MBox.addButton("Agree", QMessageBox::AcceptRole);
+        QPushButton* disagreeBut = MBox.addButton("Reject", QMessageBox::RejectRole);
+        MBox.exec();
+        if (MBox.clickedButton() == (QAbstractButton*)agreeBut) {
+            qDebug() << "You successfully changed the center of the circle";
+            star_x = touch_x;
+            star_y = touch_y;
+            emit getPos(ceil(touch_x * (seg_height - 1) / (origin_height - 1)), ceil(touch_y * (seg_width - 1) / (origin_width - 1)), touch_x, touch_y, penR);
+        }
+    }
 }
 void MyUI::pushLeft()
 {
@@ -152,19 +190,12 @@ void MyUI::postImg(const QString& filepath, QLabel* label, bool resize)
         QSize scaledSize0 = image.size().scaled(label->size(), Qt::KeepAspectRatio);
         QPixmap scaledPixmap = image.scaled(scaledSize0, Qt::KeepAspectRatio, Qt::SmoothTransformation);
         touchscreen = scaledPixmap;
-        /*
-        QPainter painter(&scaledPixmap);
-        QPen pen;
-        pen.setColor(Qt::red);
-        pen.setWidth(2);
-        painter.setPen(pen);
-        painter.drawEllipse(QPoint(50, 50), 5, 5);
-        */
         label->setPixmap(scaledPixmap);
         label->setFixedSize(scaledPixmap.size());
         seg_width = scaledPixmap.width();
         seg_height =  scaledPixmap.height();
         label->move(760 + ((480 - scaledPixmap.width()) / 2), 400 + ((270 - scaledPixmap.height()) / 2));
+        emit getPos(ceil(star_x * (seg_height - 1) / (origin_height - 1)), ceil(star_y * (seg_width - 1) / (origin_width - 1)), star_x, star_y, penR);
     }
     else
     {
@@ -181,9 +212,30 @@ void MyUI::DoSeg(const QString& filepath, QLabel* label, QLabel* label_2, QLabel
     Func.Resize(img, resize_img, 640);
     origin_height = resize_img.rows;
     origin_width = resize_img.cols;
-    Mat outimg;
-    Func.background(resize_img, outimg);
-    QPixmap pixmap = QPixmap::fromImage(QImage(outimg.data, outimg.cols, outimg.rows, outimg.step, QImage::Format_BGR888));
+
+    //Mat segimg;
+    //Func.background(resize_img, segimg);
+    //qDebug() << "Segment done !";
+
+    Mat star_img;
+    Func.filterAurora_1(resize_img, star_img);
+    qDebug() << "Generate star image done !";
+
+    //Mat mask;
+    //Func.getMask(resize_img, mask);
+    //qDebug() << "get Mask !";
+    //Mat result;
+    //multiply(star_img, mask, result);
+
+    Point max_star;
+    vector<StarInfo> stars = Func.calculateStar(star_img, max_star);
+    qDebug() << "Max Star x:" << max_star.x << ", y:" << max_star.y;
+    star_x = int(max_star.x);
+    star_y = int(max_star.y);
+    touch_x = star_x;
+    touch_y = star_y;
+
+    QPixmap pixmap = QPixmap::fromImage(QImage(star_img.data, star_img.cols, star_img.rows, star_img.step, QImage::Format_BGR888));
     QSize scaledSize = pixmap.size().scaled(label->size(), Qt::KeepAspectRatio);
     QPixmap scaled_pixmap = pixmap.scaled(scaledSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     label->setPixmap(scaled_pixmap);
@@ -258,6 +310,7 @@ void MyUI::input_browse()
             qDebug() << "No folder selected. Please choose a folder.";
             return;
         }
+        refresh();
         touch_lock = false;
         ui.lineEdit->setText(input_folderPath);
         emit getInputPath(input_folderPath);
@@ -269,6 +322,7 @@ void MyUI::input_browse()
             qDebug() << "No files selected. Please choose a file.";
             return;
         }
+        refresh();
         touch_lock = false;
         ui.lineEdit->setText(input_filePath);
         QFileInfo fileInfo(input_filePath);
@@ -281,7 +335,7 @@ void MyUI::input_browse()
 void MyUI::output_browse()
 {
     QFileDialog myFileDialog(this);
-    QString output_folderPath = myFileDialog.getExistingDirectory(this, tr("Open Folder"), QDir::currentPath());
+    output_folderPath = myFileDialog.getExistingDirectory(this, tr("Open Folder"), QDir::currentPath());
     if (output_folderPath.isEmpty()) {
         qDebug() << "No folder selected. Please choose a folder.";
         return;
@@ -347,6 +401,7 @@ void MyUI::generateMode() {
     ui.label_16->setPixmap(blank);
     ui.lineEdit->setText("");
     ui.label_21->setText("");
+    ui.label_23->setText("");
     ui.label_20->setText("0/0");
     ui.label_5->setText("Circular");
     files.clear();
@@ -402,4 +457,22 @@ void MyUI::restoreMode() {
     ui.pushButton_8->hide();
     ui.pushButton_9->hide();
     ui.pushButton_10->hide();
+}
+void MyUI::refresh() {
+    touch_lock = true;
+    ui.label_16->move(760, 400);
+    ui.label_16->setFixedSize(480, 270);
+    QPixmap blank("ui_img/blank.jpg");
+    ui.label_9->setPixmap(blank);
+    ui.label_10->setPixmap(blank);
+    ui.label_11->setPixmap(blank);
+    ui.label_12->setPixmap(blank);
+    ui.label_16->setPixmap(blank);
+    ui.lineEdit->setText("");
+    ui.label_21->setText("");
+    ui.label_23->setText("");
+    ui.label_20->setText("0/0");
+    files.clear();
+    now = 0;
+    itemCount = 0;
 }

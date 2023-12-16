@@ -428,8 +428,16 @@
      <height>30</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+     <pointsize>16</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
+    </font>
+   </property>
    <property name="text">
-    <string/>
+    <string>✘</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_18">
@@ -462,8 +470,16 @@
      <height>30</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+     <pointsize>15</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
+    </font>
+   </property>
    <property name="text">
-    <string/>
+    <string>✔</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">

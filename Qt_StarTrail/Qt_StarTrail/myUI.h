@@ -16,7 +16,7 @@ signals:
     void getSegment(const QString& string, QLabel* label, QLabel* label_2 = nullptr, QLabel* label_3 = nullptr);
     void getImg(const QString& string, QLabel* label, bool resize = false);
     void getInputPath(const QString& string);
-    void getPos(int x, int y);
+    void getPos(int x, int y, int tx, int ty, QPen pen);
     void getFiles();
 
 private slots:
@@ -32,7 +32,10 @@ private slots:
     void DoSeg(const QString& string, QLabel* label, QLabel* label_2 = nullptr, QLabel* label_3 = nullptr);
     void postImg(const QString& string, QLabel* label, bool resize = false);
     void loadImg();
-    void drawPos(int x, int y);
+    void drawPos(int x, int y, int tx, int ty, QPen pen);
+    void backPos();
+    void newPos();
+    void refresh();
 
 private:
     Ui::MyUIClass ui;
@@ -41,6 +44,7 @@ private:
     int now = 0;
     int itemCount = 0;
     QString input_folderPath;
+    QString output_folderPath;
     bool selected = true;
     bool mode = true;
     bool touch_lock = true;
@@ -51,4 +55,8 @@ private:
     int seg_width;
     int touch_x;
     int touch_y;
+    int star_x;
+    int star_y;
+    QPen penO;
+    QPen penR;
 };

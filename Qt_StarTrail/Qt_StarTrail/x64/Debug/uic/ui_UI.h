@@ -189,6 +189,11 @@ public:
         pushButton_9 = new QPushButton(MyUIClass);
         pushButton_9->setObjectName("pushButton_9");
         pushButton_9->setGeometry(QRect(1165, 360, 30, 30));
+        QFont font9;
+        font9.setFamilies({QString::fromUtf8("Arial")});
+        font9.setPointSize(16);
+        font9.setBold(false);
+        pushButton_9->setFont(font9);
         label_18 = new QLabel(MyUIClass);
         label_18->setObjectName("label_18");
         label_18->setGeometry(QRect(60, 60, 661, 50));
@@ -196,6 +201,11 @@ public:
         pushButton_10 = new QPushButton(MyUIClass);
         pushButton_10->setObjectName("pushButton_10");
         pushButton_10->setGeometry(QRect(1210, 360, 30, 30));
+        QFont font10;
+        font10.setFamilies({QString::fromUtf8("Arial")});
+        font10.setPointSize(15);
+        font10.setBold(false);
+        pushButton_10->setFont(font10);
         label_2 = new QLabel(MyUIClass);
         label_2->setObjectName("label_2");
         label_2->setGeometry(QRect(760, 240, 81, 30));
@@ -307,9 +317,9 @@ public:
         label_21->setText(QString());
         label_20->setText(QCoreApplication::translate("MyUIClass", "0/0", nullptr));
         label_4->setText(QCoreApplication::translate("MyUIClass", "Original", nullptr));
-        pushButton_9->setText(QString());
+        pushButton_9->setText(QCoreApplication::translate("MyUIClass", "\342\234\230", nullptr));
         label_18->setText(QCoreApplication::translate("MyUIClass", "Star Trail Generator", nullptr));
-        pushButton_10->setText(QString());
+        pushButton_10->setText(QCoreApplication::translate("MyUIClass", "\342\234\224", nullptr));
         label_2->setText(QCoreApplication::translate("MyUIClass", "FileName : ", nullptr));
         label_15->setText(QCoreApplication::translate("MyUIClass", "00:00:00", nullptr));
         label_12->setText(QString());
