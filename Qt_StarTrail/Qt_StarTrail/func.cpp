@@ -7,6 +7,64 @@
 using namespace cv;
 using namespace std;
 
+void Func::canny(Mat img1, Mat& out)
+{
+	Mat gray, edge;
+	cvtColor(img1, gray, COLOR_RGB2GRAY);
+	blur(gray, edge, Size(3, 3));
+	Canny(edge, out, 100, 50);
+}
+void Func::enhance(cv::Mat img1, cv::Mat& img_out)
+{
+	cv::Mat enhancedImage;
+	cv::pow(img1 / 255, 2.0, enhancedImage);
+	enhancedImage *= 255.0;
+	img_out = enhancedImage.clone();
+}
+void Func::Rotation(cv::Mat img1, cv::Mat& img_out, double x_scale, double y_scale)
+{
+	Mat imgadd = img1.clone();
+	for (float angle = 0.0; angle < 120.0; angle += 0.5)
+	{
+		cv::Point2f center(img1.cols * x_scale, img1.rows * y_scale);
+		cv::Mat rotationMatrix = cv::getRotationMatrix2D(center, angle, 1.0);
+		cv::Mat rotatedImage;
+		cv::warpAffine(img1, rotatedImage, rotationMatrix, img1.size());
+		imgadd = (imgadd + rotatedImage);
+	}
+	img_out = imgadd.clone();
+}
+void Func::Rotation2(cv::Mat img1, cv::Mat& img_out)
+{
+	Mat imgadd = img1.clone();
+	for (float angle = 0.0; angle < 120.0; angle += 0.5)
+	{
+		cv::Point2f center(img1.cols / 2.0, img1.rows / 2);
+		cv::Mat rotationMatrix = cv::getRotationMatrix2D(center, angle, 1.0 + angle / 70);
+		cv::Mat rotatedImage;
+		cv::warpAffine(img1, rotatedImage, rotationMatrix, img1.size());
+		imgadd = (imgadd + rotatedImage);
+	}
+	img_out = imgadd.clone();
+}
+void Func::addforeground(cv::Mat img1, cv::Mat img_back, cv::Mat img_src, cv::Mat& img_out)
+{
+	Mat img = img1.clone();
+	for (int i = 0; i < img_src.rows; i++)
+	{
+		for (int j = 0; j < img_src.cols; j++)
+		{
+			if (img_back.at<Vec3b>(i, j)[0] == 0 && img_back.at<Vec3b>(i, j)[1] == 0 && img_back.at<Vec3b>(i, j)[2] == 0)
+			{
+				for (int k = 0; k < 3; k++)
+				{
+					img.at<Vec3b>(i, j)[k] = img_src.at<Vec3b>(i, j)[k];
+				}
+			}
+		}
+	}
+	img_out = img.clone();
+}
 vector<StarInfo> Func::calculateStar(Mat image, Point& max_star) 
 {
 	//start
@@ -120,7 +178,7 @@ void Func::filterAurora_1(Mat image, Mat& output)
 void Func::background(cv::Mat img1, cv::Mat& img_out)
 {
 	Mat result, bg, fg;
-	Rect rect(0, 0, img1.cols, img1.rows - 100);
+	Rect rect(0, 0, img1.cols, img1.rows* 0.8);
 	grabCut(img1, result, rect, bg, fg, 1, GC_INIT_WITH_RECT);
 	compare(result, GC_PR_FGD, result, CMP_EQ);
 	Mat fore(img1.size(), CV_8UC3, Scalar(0, 0, 0));

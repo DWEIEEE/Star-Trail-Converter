@@ -23,10 +23,17 @@ public:
     void Resize(cv::Mat img, cv::Mat& out_img, double threshold);
     void background(cv::Mat img1, cv::Mat& img_out);
     void foreground(cv::Mat img1, cv::Mat img_back, cv::Mat& img_out);
+
     std::vector<StarInfo> calculateStar(cv::Mat image, cv::Point& max_star);
     void filterAurora_1(cv::Mat image, cv::Mat& output);
     void powerLawTransform(cv::Mat image, double gamma, cv::Mat& output);
     void getMask(cv::Mat img1, cv::Mat& img_out);
+
+    void canny(cv::Mat img1, cv::Mat& out);
+    void enhance(cv::Mat img1, cv::Mat& img_out);
+    void Rotation(cv::Mat img1, cv::Mat& img_out, double x_scale, double y_scale);
+    void Rotation2(cv::Mat img1, cv::Mat& img_out);
+    void addforeground(cv::Mat img1, cv::Mat img_back, cv::Mat img_src, cv::Mat& img_out);
 
 private:
     Ui::MyUIClass ui;

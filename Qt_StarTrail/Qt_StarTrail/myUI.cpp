@@ -213,19 +213,13 @@ void MyUI::DoSeg(const QString& filepath, QLabel* label, QLabel* label_2, QLabel
     origin_height = resize_img.rows;
     origin_width = resize_img.cols;
 
-    //Mat segimg;
-    //Func.background(resize_img, segimg);
-    //qDebug() << "Segment done !";
+    Mat seg_img;
+    Func.background(resize_img, seg_img);
+    qDebug() << "Segment done !";
 
     Mat star_img;
-    Func.filterAurora_1(resize_img, star_img);
+    Func.filterAurora_1(seg_img, star_img);
     qDebug() << "Generate star image done !";
-
-    //Mat mask;
-    //Func.getMask(resize_img, mask);
-    //qDebug() << "get Mask !";
-    //Mat result;
-    //multiply(star_img, mask, result);
 
     Point max_star;
     vector<StarInfo> stars = Func.calculateStar(star_img, max_star);
@@ -235,7 +229,16 @@ void MyUI::DoSeg(const QString& filepath, QLabel* label, QLabel* label_2, QLabel
     touch_x = star_x;
     touch_y = star_y;
 
-    QPixmap pixmap = QPixmap::fromImage(QImage(star_img.data, star_img.cols, star_img.rows, star_img.step, QImage::Format_BGR888));
+    Mat img_out2, img_gray, img_BGR, img_out3, img_out4, img_out5, img_out6;
+    cvtColor(seg_img, img_gray, COLOR_BGR2GRAY);
+    Func.enhance(img_gray, img_out2);
+    cvtColor(img_out2 / 255, img_BGR, COLOR_GRAY2BGR);
+    multiply(img_BGR, resize_img, img_out3);
+    Func.Rotation(img_out3, img_out4, 0.5, 0.5);
+    img_out5 = seg_img + img_out4;
+    Func.addforeground(img_out5, seg_img, resize_img, img_out6);
+
+    QPixmap pixmap = QPixmap::fromImage(QImage(img_out6.data, img_out6.cols, img_out6.rows, img_out6.step, QImage::Format_BGR888));
     QSize scaledSize = pixmap.size().scaled(label->size(), Qt::KeepAspectRatio);
     QPixmap scaled_pixmap = pixmap.scaled(scaledSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     label->setPixmap(scaled_pixmap);
