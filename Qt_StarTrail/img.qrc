@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="MyUI">
+    <file>ui_img/blank.jpg</file>
+  </qresource>
+</RCC>
