@@ -6,12 +6,46 @@ Team member : Daniel Lai, Morris Huang, Sophia Huang
 # Abstract
 Due to the Earth's rotation, the starry sky is constantly rising in the east and setting in the west. Star trails are created by using long exposure photography to capture the movement of stars. This project aims to generate star trail images through image processing techniques. By separating the foreground and background, identifying all the stars in the sky, and applying different operations to the stars, various types of star trails—such as circular, radial, and spiral—can be produced. Experiments will be conducted on different types of data, including dark foregrounds, bright foregrounds, and starry skies with auroras. The goal is to design a general and robust algorithm, integrated with a user-friendly UI and CUDA acceleration, to provide users with an easy-to-use and visually appealing experience.
 
+# Results
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <h4>Star Sky (Image)</h4>
+      <img src="https://github.com/DWEIEEE/Star-Trail-Converter/blob/main/Dataset/light_foreground_1.jpg" width="100%">
+    </td>
+    <td align="center" width="50%">
+      <h4>Star Trail (GIF)</h4>
+      <img src="https://github.com/DWEIEEE/Star-Trail-Converter/blob/main/samples/Circular_light_foreground_1_20231220144232.gif?raw=true" width="100%">
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="50%">
+      <h4>Star Sky (Image)</h4>
+      <img src="https://github.com/DWEIEEE/Star-Trail-Converter/blob/main/Dataset/light_foreground_4.jpg" width="100%">
+    </td>
+    <td align="center" width="50%">
+      <h4>Star Trail (GIF)</h4>
+      <img src="https://github.com/DWEIEEE/Star-Trail-Converter/blob/main/samples/Spiral_light_foreground_4_20231220163431.gif?raw=true" width="100%">
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="50%">
+      <h4>Star Trail (Image)</h4>
+      <img src="https://github.com/DWEIEEE/Star-Trail-Converter/blob/main/Dataset/star_trail/star_trail_3.jpg" width="100%">
+    </td>
+    <td align="center" width="50%">
+      <h4>Star Sky (Restored)</h4>
+      <img src="https://github.com/DWEIEEE/Star-Trail-Converter/blob/main/samples/StarSky_star_trail_3_20231224144919.png?raw=true" width="100%">
+    </td>
+  </tr>
+</table>
+
 # Libraries
 - C++
 - OpenCV
 - Qt
 - CUDA
-
+- 
 # Expected running time
 CPU : Intel Core i7-14700K, RAM : 64GB, GPU : Nvidia RTX3090 24GB
 
