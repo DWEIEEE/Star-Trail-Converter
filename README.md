@@ -45,7 +45,7 @@ Due to the Earth's rotation, the starry sky is constantly rising in the east and
 - OpenCV
 - Qt
 - CUDA
-- 
+
 # Expected running time
 CPU : Intel Core i7-14700K, RAM : 64GB, GPU : Nvidia RTX3090 24GB
 
